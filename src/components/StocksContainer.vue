@@ -34,7 +34,6 @@
             })
             this.stocksData = result
             this.loading = false
-            console.log(this.stocksData)
           }))
           .catch(err => {
             this.error = err
@@ -55,8 +54,7 @@
           `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&outputsize=full&symbol=AMZN&interval=1min&apikey=${this.apiKey}`,
           `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&outputsize=full&symbol=GOOGL&interval=1min&apikey=${this.apiKey}`]
       }
-    }
-    ,
+    },
     computed: {
       getMeta() {
         return this.stocksData ? this.stocksData['Meta Data'] : 'loading'
