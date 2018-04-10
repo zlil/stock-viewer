@@ -1,6 +1,10 @@
 # stock-viewer
 
 > A Vue.js project
+<p align="center">
+  <img src="./src/assets/screenshot.png" alt="Stocks Viewer"
+       width="550" height="550">
+</p>
 
 ## Build Setup
 
