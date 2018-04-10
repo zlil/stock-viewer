@@ -22,7 +22,6 @@
     async mounted() {
 
       this.keys = Object.keys(this.stockData['data']['Time Series (1min)']);
-      //this.heading = this.stockData ? this.stockData['data']['Meta Data']['2. Symbol'] : ''
       this.currentStockValue = this.stockData['data']['Time Series (1min)'][this.keys[0]]['4. close']
       let self = this
       $(document).ready(async () => {
@@ -47,7 +46,6 @@
     },
     data() {
       return {
-        //heading: null,
         currentStockValue: null,
         currentTime: moment().format("YYYY-MM-DD HH:mm:ss"),
         trendClass: null,
@@ -74,38 +72,19 @@
       drawGraph(options) {
 
         let self = this
-
         return new Highcharts.stockChart(options.renderTo, {
-//          chart: {borderColor: '#eeeeee', borderWidth: 2},
-//          title: {text: options.title},
-//          xAxis: {
-//            title: {text: '1 minute interval'}, type: 'datetime', dateTimeLabelFormats: {
-//              second: '%Y-%m-%d<br/>%H:%M:%S',
-//              minute: '%Y-%m-%d<br/>%H:%M'
-//            }
-//          },
-//          yAxis: {title: {text: `${self.heading} Price`, margin: 80}},
-//          plotOptions: {spline: {marker: {symbol: 'dot'}}},
-//          tooltip: {shared: false, hideDelay: 0},
-//          series: options.series || null,
-//          animation: false,
-//          exporting: false,
-//          credits: false,
-//          rangeSelector: {
-//            selected: 1
-//          }
           xAxis: {
             allowDecimals: true,
             categories: options.categories,
             type: 'datetime'
           },
-
+          yAxis: {title: {text: `${self.heading} Price`, margin: 80}},
           plotOptions: {
             series: {
               pointStart: 100
             }
           },
-
+          credits: false,
           series: options.series || null,
         })
 
@@ -126,7 +105,7 @@
           let price = this.stockData['data']['Time Series (1min)'][sixHoursBack] ? this.stockData['data']['Time Series (1min)'][sixHoursBack]['4. close'] : prices[prices.length - 1];
           if (price != undefined && sixHoursBack != undefined)
             prices.push(parseFloat(price))
-          categories.push("" + `${sixHoursBack}` + "")
+          categories.push(`${sixHoursBack}`)
 
           sixHoursBack = moment(sixHoursBack).add(1, 'minutes').format("YYYY-MM-DD HH:mm:00")
         }

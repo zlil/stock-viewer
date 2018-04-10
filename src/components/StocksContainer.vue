@@ -41,12 +41,10 @@
             this.loading = false
           }))
           .catch(err => {
-            debugger
             this.error = err
             this.loading = false
           })
       }catch(e){
-        debugger
         console.log('error', e);
       }
     },
