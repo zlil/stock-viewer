@@ -9,7 +9,6 @@
       <div class="row">
         <div class="col s12 m12 l12 xl12">
           <div ref="graph"></div>
-          <div ref="graph2"></div>
         </div>
       </div>
     </div>
@@ -43,21 +42,6 @@
             },
           }],
         });
-        this.graph2 = self.drawGraph2({
-          title: 'Stock Movement',
-          renderTo: self.$refs.graph2,
-          categories: self.graphData.categories,
-          series: [{
-            name: 'Price',
-            data: self.graphData.prices,
-            color: '#e57373',
-            pointStart: new Date(this.keys[0]).getTime(),
-            pointInterval: (36 * 10000) / 6,
-            tooltip: {
-              valuePrefix: 'Stock Value: '
-            },
-          }],
-        })
         self.trend = self.calculateTrend
       })
     },
@@ -68,7 +52,6 @@
         currentTime: moment().format("YYYY-MM-DD HH:mm:ss"),
         trendClass: null,
         graph: null,
-        graph2: null,
         graphData: [],
         keys: [],
         trend: null
@@ -88,7 +71,7 @@
       }
     },
     methods: {
-      drawGraph2(options) {
+      drawGraph(options) {
 
         let self = this
 
@@ -127,26 +110,6 @@
         })
 
       },
-      drawGraph(options) {
-
-        let self = this
-
-        return new Highcharts.chart(options.renderTo, {
-          xAxis: {
-            allowDecimals: true,
-            categories: options.categories,
-            type: 'datetime'
-          },
-
-          plotOptions: {
-            series: {
-              pointStart: 100
-            }
-          },
-
-          series: options.series || null,
-        })
-      },
       fetchSixHourData() {
         let lastDataSignatureAt = null;
         let sixHoursBack = moment(this.keys[0]).subtract(6, 'hours').format("YYYY-MM-DD HH:mm:00")
@@ -158,33 +121,20 @@
         let prices = [];
         let categories = [];
         let j = 0;
-        debugger
+
         while (sixHoursBack < lastDataSignatureAt) {
           let price = this.stockData['data']['Time Series (1min)'][sixHoursBack] ? this.stockData['data']['Time Series (1min)'][sixHoursBack]['4. close'] : prices[prices.length - 1];
           if (price != undefined && sixHoursBack != undefined)
             prices.push(parseFloat(price))
-          if (j / 15 == 0) {
-            categories.push("" + `${sixHoursBack}` + "")
-          }
+          categories.push("" + `${sixHoursBack}` + "")
+
           sixHoursBack = moment(sixHoursBack).add(1, 'minutes').format("YYYY-MM-DD HH:mm:00")
         }
         this.graphData.prices = prices
         this.graphData.categories = categories
       }
     }
-//      fetchSixHourData() {
-//
-//        let sixHoursBack = moment(this.keys[0]).subtract(6, 'hours').format("YYYY-MM-DD HH:mm:00")
-//        let prices = [];
-//        while (sixHoursBack < this.currentTime) {
-//          let price = this.stockData['data']['Time Series (1min)'][sixHoursBack] ? this.stockData['data']['Time Series (1min)'][sixHoursBack]['4. close'] : prices[prices.length - 1];
-//          if(price != undefined && sixHoursBack != undefined)
-//            prices.push(parseFloat(price))
-//          sixHoursBack = moment(sixHoursBack).add(1, 'minutes').format("YYYY-MM-DD HH:mm:00")
-//        }
-//        this.graphData = prices
-//      }
-//
+
   }
 
 </script>
