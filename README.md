@@ -1,6 +1,6 @@
 # stock-viewer
 
-> A Vue.js project
+> A Vue.js project - simple stocks viewer
 <p align="center">
   <img src="./src/assets/screenshot.png" alt="Stocks Viewer"
        width="550" height="550">
@@ -22,4 +22,8 @@ npm run build
 npm run build --report
 ```
 
-# Please run master branch
+# Run master branch
+* Data from alphavantage.co
+* Charts from highcharts.com
+
+Enjoy
